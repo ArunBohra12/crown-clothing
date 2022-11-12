@@ -38,8 +38,13 @@ const SignUpForm = () => {
 
       resetFormFields();
     } catch (err) {
-      if (err.code === 'auth/email-already-in-use') {
-        alert('Cannot create user, email already in use');
+      switch (err.code) {
+        case 'auth/weak-password':
+          alert('Password should be at least 6 characters');
+        case 'auth/email-already-in-use':
+          alert("Can't create user. Email already in use");
+        default:
+          console.error(err);
       }
     }
   };

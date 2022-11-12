@@ -6,6 +6,8 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 
@@ -57,7 +59,7 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
         ...additionalInformation,
       });
     } catch (err) {
-      console.log('Error creating the user');
+      alert('Error creating the user');
       console.error(err.message);
     }
 
@@ -80,3 +82,9 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 
   return await signInWithEmailAndPassword(auth, email, password);
 };
+
+// Sign out users
+export const signOutUser = () => signOut(auth);
+
+// Observer Listener
+export const onAuthStateChangedListener = callback => onAuthStateChanged(auth, callback);
